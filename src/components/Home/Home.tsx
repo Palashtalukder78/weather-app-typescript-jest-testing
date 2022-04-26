@@ -14,7 +14,7 @@ const Home = () => {
                 <TextField style={{width:"80%", margin:"15px 0"}} id="outlined-basic" label="Enter Country" variant="outlined" 
                 onChange={(e)=>setCountry(e.target.value)}
                 />
-                <Button onClick={()=>history.push(`/country/${country}`)} style={{width:"80%"}}variant="contained">Search</Button>
+                <Button onClick={()=>history.push(`/country/${country}`)} style={{width:"80%"}}variant="contained" disabled={!country}>Search</Button>
             </div>
         </div>
     );
