@@ -29,6 +29,7 @@ const Country = () => {
 
     useEffect(()=>{
         fetchAllCountry();
+        // eslint-disable-next-line
     },[]);
 
     const fetchWeather = async(capitalCity:string)=>{
@@ -37,7 +38,7 @@ const Country = () => {
     }
     const history = useHistory();
     return (
-        <>
+        <div data-testid='country'>
         {
             loading ? 
                 (
@@ -51,7 +52,7 @@ const Country = () => {
                 </div>
             )
             :
-            <div data-testid='country' style={{margin:"100px", display:"flex", justifyContent:"space-around", alignItems:"center"}}>
+            <div  style={{margin:"100px", display:"flex", justifyContent:"space-around", alignItems:"center"}}>
                 <div style={{textAlign:"center"}}>
                     {
                         info.map(data=>(
@@ -84,7 +85,7 @@ const Country = () => {
                 </div>
             </div>
         }
-        </>
+        </div>
     );
 };
 
