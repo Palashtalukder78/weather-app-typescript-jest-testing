@@ -11,10 +11,10 @@ const Home = () => {
                 <h3>Search Country</h3>
             </div>
             <div style={{width:"500px", margin:"auto"}}>
-                <TextField style={{width:"80%", margin:"15px 0"}} id="outlined-basic" label="Enter Country" variant="outlined" 
+                <TextField data-testid="inputbox-test-id" style={{width:"80%", margin:"15px 0"}} id="outlined-basic" label="Enter country Name" variant="outlined" 
                 onChange={(e)=>setCountry(e.target.value)}
                 />
-                <Button onClick={()=>history.push(`/country/${country}`)} style={{width:"80%"}}variant="contained" disabled={!country}>Search</Button>
+                <Button data-testid="button-testid" onClick={()=>history.push(`/country/${country}`)} style={{width:"80%"}}variant="contained" disabled={!country}>Search</Button>
             </div>
         </div>
     );

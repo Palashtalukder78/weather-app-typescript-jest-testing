@@ -38,7 +38,8 @@ const Country = () => {
     }
     const history = useHistory();
     return (
-        <div data-testid='country'>
+        <div data-testid='country-info'>
+        
         {
             loading ? 
                 (
@@ -54,6 +55,7 @@ const Country = () => {
             :
             <div  style={{margin:"100px", display:"flex", justifyContent:"space-around", alignItems:"center"}}>
                 <div style={{textAlign:"center"}}>
+                    <h1>Country Details</h1>
                     {
                         info.map(data=>(
                             <div key={data.latlng[0]+data.latlng[1]}>

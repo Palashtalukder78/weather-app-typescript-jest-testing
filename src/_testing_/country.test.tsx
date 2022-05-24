@@ -1,16 +1,41 @@
-import { render, screen } from "@testing-library/react"
-import Country from "../components/Country/Country"
-import {createMemoryHistory} from 'history';
-import { Router } from "react-router-dom";
 
-test('render country info',()=>{
-    const history = createMemoryHistory();
-    history.push('/country/country')
+import { act } from '@testing-library/react';
+import axios from 'axios';
+import Country from '../components/Country/Country';
+import { componentRenderByMemoryRouter, toBeExpectByTestId, toBeExpectByText } from '../utils/test';
 
-    render(<Router history={history}>
-        <Country></Country>
-    </Router>)
 
-    const details = screen.getByTestId('country');
-    expect(details).toBeInTheDocument()
-})
+describe('Test CountryDetails Componet', () => {
+    beforeEach(async () => {
+        jest.spyOn(axios, 'get').mockResolvedValue({
+            data: [
+                {
+                    capital: 'Dhaka',
+                    population: 164689383,
+                    latlng: [24.0, 90.0],
+                    flags: {
+                        png: 'https://flagcdn.com/w320/bd.png',
+                        svg: 'https://flagcdn.com/bd.svg',
+                    },
+                },
+            ],
+        });
+    });
+
+    test('should render CountryDetails component with path "/details/BD"', async () => {
+        // eslint-disable-next-line testing-library/no-unnecessary-act
+        await act(async () => {
+            componentRenderByMemoryRouter('/details/BD', <Country />);
+        });
+
+        toBeExpectByText('Country Details');
+    });
+
+    test('should render country info', async () => {
+        // eslint-disable-next-line testing-library/no-unnecessary-act
+        await act(async () => {
+            componentRenderByMemoryRouter('/details/BD', <Country />);
+        });
+        await toBeExpectByTestId('country-info');
+    });
+});
