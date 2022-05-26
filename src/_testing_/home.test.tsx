@@ -1,41 +1,40 @@
 import { fireEvent, screen } from '@testing-library/react';
 import Home from '../components/Home/Home';
-import { componentRenderByMemoryRouter, toBeExpectByTestId, toBeExpectByText } from '../utils/test';
+import { RenderingByMemoryRouter } from './App.test';
+// import { RenderingByMemoryRouter } from '../utils/test';
 
-// function for cheek inputbox tesing
-function hasInputValue(
+//for check inputbox testing
+function isInputValue(
     e: Document | Element | Window | Node,
     inputValue: string
 ) {
     return screen.getByDisplayValue(inputValue) === e;
 }
-
-describe('Test home Componet', () => {
-    test('should render Home component with path "/"', async () => {
-        componentRenderByMemoryRouter('/', <Home />);
-        toBeExpectByText('Search');
+describe('Rendering home Component', () => {
+    test('Render Home component with path "/"', async () => {
+        RenderingByMemoryRouter('/', <Home />);
+        expect(screen.getByText('Search')).toBeInTheDocument(); // done
     });
 
-    test('should render input box in home component', () => {
-        componentRenderByMemoryRouter('/', <Home />);
-        toBeExpectByTestId('inputbox-test-id');
+    test('Rendering input field in home component', () => {
+        RenderingByMemoryRouter('/', <Home />);
+        expect(screen.getByTestId('inputbox-test-id')).toBeInTheDocument();
     });
 
-    test('should render button in home component', () => {
-        componentRenderByMemoryRouter('/', <Home />);
-        toBeExpectByTestId('button-testid');
+    test('Rendering button in home component', () => {
+        RenderingByMemoryRouter('/', <Home />);
+        expect(screen.getByTestId('button-testid')).toBeInTheDocument(); // done
     });
 
-    test('cheek the button are disable when the inputbox are empty', () => {
-        componentRenderByMemoryRouter('/', <Home />);
+    test('Checking the button are disable when the inputbox are empty', () => {
+        RenderingByMemoryRouter('/', <Home />);
         const findButton = screen.getByRole('button');
         expect(findButton).toHaveAttribute('disabled');
     });
-
-    test('cheek input box value', () => {
-        componentRenderByMemoryRouter('/', <Home />);
+    test('Checking input field value', () => {
+        RenderingByMemoryRouter('/', <Home />);
         const input = screen.getByLabelText('Enter country Name');
-        fireEvent.change(input, { target: { value: 'BD' } });
-        expect(hasInputValue(input, 'BD')).toBe(true);
+        fireEvent.change(input, { target: { value: 'bangladesh' } });
+        expect(isInputValue(input, 'bangladesh')).toBe(true);
     });
 });

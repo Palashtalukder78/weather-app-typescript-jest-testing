@@ -1,16 +1,13 @@
-
-import { act } from '@testing-library/react';
+import { act, screen } from '@testing-library/react';
 import axios from 'axios';
 import Country from '../components/Country/Country';
-import { componentRenderByMemoryRouter, toBeExpectByTestId, toBeExpectByText } from '../utils/test';
-
-
-describe('Test CountryDetails Componet', () => {
+import { RenderingByMemoryRouter } from './App.test';
+describe('Rendering CountryDetails Component', () => {
     beforeEach(async () => {
         jest.spyOn(axios, 'get').mockResolvedValue({
             data: [
                 {
-                    capital: 'Dhaka',
+                    capital: 'dhaka',
                     population: 164689383,
                     latlng: [24.0, 90.0],
                     flags: {
@@ -21,21 +18,18 @@ describe('Test CountryDetails Componet', () => {
             ],
         });
     });
-
-    test('should render CountryDetails component with path "/details/BD"', async () => {
-        // eslint-disable-next-line testing-library/no-unnecessary-act
+    test('Rendering Country Details component with path "/details/bangladesh"', async () => {
+        // eslint-disable-next-line
         await act(async () => {
-            componentRenderByMemoryRouter('/details/BD', <Country />);
+            RenderingByMemoryRouter('/details/bangladesh', <Country />);
         });
-
-        toBeExpectByText('Country Details');
+        expect(screen.getByText('Country Details')).toBeInTheDocument(); // Done
     });
-
-    test('should render country info', async () => {
-        // eslint-disable-next-line testing-library/no-unnecessary-act
+    test('Rendering country info', async () => {
+        // eslint-disable-next-line 
         await act(async () => {
-            componentRenderByMemoryRouter('/details/BD', <Country />);
+            RenderingByMemoryRouter('/details/Bangladesh', <Country />);
         });
-        await toBeExpectByTestId('country-info');
+        await expect(screen.getByTestId('country-info')).toBeInTheDocument();
     });
 });

@@ -1,22 +1,34 @@
+import { render, screen } from '@testing-library/react';
 import App from '../App';
-import { componentRenderByMemoryRouter, toBeExpectByTestId, toBeExpectByText } from '../utils/test';
+// import { RenderingByMemoryRouter } from '../utils/test';
+import React, { ReactChild, ReactElement } from 'react';
+import { MemoryRouter } from 'react-router-dom';
 
+export const RenderingByMemoryRouter = (
+    routingPath: string | '',
+    componentName: ReactElement | ReactChild
+) => {
+    render(
+        <MemoryRouter initialEntries={[routingPath]}>
+            {componentName}
+        </MemoryRouter>
+    );
+};
 
 describe('Test App Router', () => {
-    test('should render app componet', () => {
-        componentRenderByMemoryRouter('/', <App />);
-        toBeExpectByTestId('app-component-test-id');
+    test('Render app componet', () => {
+        RenderingByMemoryRouter('/', <App />);
+        expect(screen.getByTestId('app-component-test-id')).toBeInTheDocument(); 
     });
-
-    test('should Render Home component with path "/"', () => {
-        componentRenderByMemoryRouter('/', <App />);
-        toBeExpectByText('Search Country');
+    test('Rendering Home component for path "/"', () => {
+        RenderingByMemoryRouter('/', <App />);
+        expect(screen.getByText('Search Country')).toBeInTheDocument();
     });
-    test('should render 404 page', () => {
-        componentRenderByMemoryRouter(
+    test('should render 404 not found page', () => {
+        RenderingByMemoryRouter(
             '/details/BD/hjgsdfjghsdjfg',
             <App />
         );
-        toBeExpectByText('404 Page Not Found');
+        expect(screen.getByText('404 Page Not Found')).toBeInTheDocument(); 
     });
-});
+}); 
