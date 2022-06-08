@@ -1,34 +1,38 @@
-import { render, screen } from '@testing-library/react';
-import App from '../App';
-// import { RenderingByMemoryRouter } from '../utils/test';
-import React, { ReactChild, ReactElement } from 'react';
-import { MemoryRouter } from 'react-router-dom';
+import { render, screen } from "@testing-library/react";
+import {  Router } from "react-router-dom";
+import App from "../App";
+import {createMemoryHistory} from "history"
 
-export const RenderingByMemoryRouter = (
-    routingPath: string | '',
-    componentName: ReactElement | ReactChild
-) => {
-    render(
-        <MemoryRouter initialEntries={[routingPath]}>
-            {componentName}
-        </MemoryRouter>
-    );
-};
+test('render app component', async() => {
+    const history = createMemoryHistory();
+    history.push("/");
 
-describe('Test App Router', () => {
-    test('Render app componet', () => {
-        RenderingByMemoryRouter('/', <App />);
-        expect(screen.getByTestId('app-component-test-id')).toBeInTheDocument(); 
-    });
-    test('Rendering Home component for path "/"', () => {
-        RenderingByMemoryRouter('/', <App />);
-        expect(screen.getByText('Search Country')).toBeInTheDocument();
-    });
-    test('should render 404 not found page', () => {
-        RenderingByMemoryRouter(
-            '/details/BD/hjgsdfjghsdjfg',
+    render(<Router history={history}>
+           <App />
+    </Router>);
+  const appId1 = screen.getByTestId("app-component-test-id");
+  expect(appId1).toBeInTheDocument();
+});
+
+test('Rendering Home Component for path "/"', () => {
+    const history = createMemoryHistory();
+    history.push("/");
+
+   render(<Router history={history}>
             <App />
-        );
-        expect(screen.getByText('404 Page Not Found')).toBeInTheDocument(); 
-    });
+        </Router>);
+
+  const appId2 = screen.getByText("Search Country");
+  expect(appId2).toBeInTheDocument();
+}); 
+
+test('Rendering 404 not found page', () => {
+    const history = createMemoryHistory();
+    history.push("/details/BD/gfdgfdgh");
+    render(<Router history={history}>
+            <App />
+        </Router>);
+
+    const appId3 = screen.getByText("404 Page Not Found");
+    expect(appId3).toBeInTheDocument();
 }); 
