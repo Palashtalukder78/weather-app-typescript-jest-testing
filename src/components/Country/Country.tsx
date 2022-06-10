@@ -67,7 +67,7 @@ const Country = () => {
                                     <img src={data.flags?.png} alt="" />
                                 </div>
                                 <Button variant='contained' onClick={()=>fetchWeather(info[0].capital[0])}>
-                                    see Weather
+                                    Capital Weather
                                 </Button>
                             </div>
                         ))

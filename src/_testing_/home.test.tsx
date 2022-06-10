@@ -57,7 +57,7 @@ test('checking input field value', () => {
     render(<Router history={history}>
            <Home />
     </Router>);
-    const input = screen.getByLabelText("Enter country Name");
+    const input = screen.getByLabelText("Enter country");
     fireEvent.change(input,{target:{
             value:"bangladesh"
         }});
